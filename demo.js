@@ -1,8 +1,3 @@
-/**
- * Demo and Test Script for User Payout Management System
- * Demonstrates all functionality including edge cases
- */
-
 const fs = require('fs');
 const PayoutSystem = require('./payoutSystem');
 const { SaleStatus } = require('./models');
@@ -182,7 +177,6 @@ async function demoEdgeCases() {
     const system = new PayoutSystem(dbPath);
 
     try {
-        // Edge Case 1
         printSubsection('Edge Case 1: Advance payout job runs multiple times');
         const sale = await system.createSale('user_3', 'brand_1', 50);
 
@@ -193,7 +187,6 @@ async function demoEdgeCases() {
         console.log(`Second run - Processed: ${result2.totalProcessed}, Amount: ₹${result2.totalAmount}`);
         console.log('✓ No duplicate advance payouts created');
 
-        // Edge Case 2
         printSubsection('Edge Case 2: Reconciling already reconciled sale');
         await system.reconcileSales([{ sale_id: sale.saleId, status: 'approved' }], 'admin_123');
         console.log('First reconciliation completed');
@@ -202,14 +195,12 @@ async function demoEdgeCases() {
         console.log(`Second reconciliation - Sales processed: ${result.totalSalesProcessed}`);
         console.log('✓ Already reconciled sale was not processed again');
 
-        // Edge Case 3
         printSubsection('Edge Case 3: Sale with no advance payout');
         const sale2 = await system.createSale('user_3', 'brand_1', 30);
         const result3 = await system.reconcileSales([{ sale_id: sale2.saleId, status: 'approved' }], 'admin_123');
         console.log(`Final payout for sale with no advance: ₹${result3.finalPayouts[0].netAmount}`);
         console.log('✓ Full amount credited (no advance to deduct)');
 
-        // Edge Case 4
         printSubsection('Edge Case 4: All sales rejected (negative adjustment)');
         const sale3 = await system.createSale('user_4', 'brand_1', 100);
         await system.processAdvancePayouts();
@@ -217,7 +208,6 @@ async function demoEdgeCases() {
         console.log(`Rejected sale adjustment: ₹${result4.finalPayouts[0].advanceAdjustment}`);
         console.log('✓ Negative adjustment applied correctly');
 
-        // Edge Case 5
         printSubsection('Edge Case 5: Operations on non-existent user');
         try {
             await system.getUserBalance('nonexistent_user');
@@ -226,7 +216,6 @@ async function demoEdgeCases() {
             console.log(`✓ Expected error: ${error.message}`);
         }
 
-        // Edge Case 6
         printSubsection('Edge Case 6: Invalid payout type in recovery');
         try {
             await system.recoverFailedPayout('invalid_type', 'some_id', 'error');

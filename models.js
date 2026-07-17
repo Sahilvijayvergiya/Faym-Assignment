@@ -1,8 +1,3 @@
-/**
- * Entity/Class Design for User Payout Management System
- * Defines all data models and their relationships
- */
-
 // Enums
 const SaleStatus = {
     PENDING: 'pending',

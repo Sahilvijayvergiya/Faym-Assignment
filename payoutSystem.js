@@ -1,8 +1,3 @@
-/**
- * User Payout Management System Implementation
- * Handles advance payouts, final payouts, reconciliation, and withdrawal management
- */
-
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
@@ -74,8 +69,6 @@ class PayoutSystem {
         });
     }
 
-    // ==================== SALE MANAGEMENT ====================
-
     async createSale(userId, brandId, earning) {
         await this.ensureInitialized();
         const saleId = `sale_${uuidv4().substring(0, 8)}`;
@@ -142,8 +135,6 @@ class PayoutSystem {
             row.updated_at
         ));
     }
-
-    // ==================== ADVANCE PAYOUT MANAGEMENT ====================
 
     async processAdvancePayouts() {
         await this.ensureInitialized();
@@ -229,8 +220,6 @@ class PayoutSystem {
             row.completed_at
         ));
     }
-
-    // ==================== RECONCILIATION ====================
 
     async reconcileSales(salesUpdates, processedBy) {
         await this.ensureInitialized();
@@ -350,8 +339,6 @@ class PayoutSystem {
         );
     }
 
-    // ==================== WITHDRAWAL MANAGEMENT ====================
-
     async requestWithdrawal(userId, amount) {
         await this.ensureInitialized();
         const balance = await this.getSql(
@@ -468,8 +455,6 @@ class PayoutSystem {
         ));
     }
 
-    // ==================== FAILED PAYOUT RECOVERY ====================
-
     async recoverFailedPayout(payoutType, payoutId, failureReason) {
         await this.ensureInitialized();
         let payout;
@@ -556,8 +541,6 @@ class PayoutSystem {
         };
     }
 
-    // ==================== USER BALANCE ====================
-
     async getUserBalance(userId) {
         await this.ensureInitialized();
         const balance = await this.getSql(
@@ -618,8 +601,6 @@ class PayoutSystem {
             balance.pendingBalance
         );
     }
-
-    // ==================== TRANSACTION MANAGEMENT ====================
 
     async createPayoutTransaction(userId, transactionType, amount, referenceId, status) {
         const transactionId = `txn_${uuidv4().substring(0, 8)}`;
