@@ -1,0 +1,22 @@
+{
+  "name": "user-payout-management-system",
+  "version": "1.0.0",
+  "description": "User Payout Management System for affiliate sales",
+  "main": "payoutSystem.js",
+  "scripts": {
+    "demo": "node demo.js",
+    "test": "node demo.js"
+  },
+  "keywords": [
+    "payout",
+    "affiliate",
+    "sales",
+    "reconciliation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.0"
+  }
+}
